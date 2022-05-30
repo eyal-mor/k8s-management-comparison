@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  env: prod
+  namespace: kustomize-prod
+spec:
+  replicas: 10
+  strategy:
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 1
+  type: RollingUpdate

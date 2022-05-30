@@ -1,0 +1,16 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: web-hpa
+  env: prod
+  namespace: kustomize-prod
+spec:
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+  resource:
+    name: cpu
+    target:
+      type: Utilization
+      averageUtilization: 70
