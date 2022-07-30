@@ -14,10 +14,22 @@ spec:
       containers:
         - name: web
           image: ghcr.io/eyalmor-ent/django:latest
+          command:
+            - "poetry"
+          args:
+            - "run"
+            - "daphne"
+            - "-b0.0.0.0"
+            - "-p 8000"
+            - "admin.asgi:application"
           resources:
             limits:
-              cpu: "1.0"
+              cpu: "0.5"
               memory: 500M
+          env:
+            - name: DEBUG
+              value: "FALSE"
+          workingDir: "/opt/code/app"
           ports:
             - name: http
               containerPort: 8080

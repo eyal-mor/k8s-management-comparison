@@ -7,18 +7,15 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  web:
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile
-    command: ["docker/wait-for-it.sh", "db:5432", "--", "poetry", "run", "python", "app/manage.py", "runserver", "0.0.0.0:8000"]
-    volumes:
-      - .:/opt/code
-    ports:
-      - "8000:8000"
+  admin:
+    image: dpage/pgadmin4
     environment:
-      - POSTGRES_NAME=postgres
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=PassW0rd
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    ports:
+      - 8000:80
     depends_on:
       - db
